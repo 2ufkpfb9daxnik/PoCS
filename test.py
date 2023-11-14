@@ -15,11 +15,11 @@ thisyear = datetime.date.today().year
 
 
 
-
 def button():
     window2=Toplevel(root)
     window2.focus()
     window2.geometry("550x400")
+    window2.title("食品追加")
 
     window2_frame1=Frame(window2, width=550, height=100, relief='solid', padx=10, pady=10)
     window2_frame2=Frame(window2, width=550, height=100, relief='solid', padx=10, pady=10)
@@ -37,11 +37,16 @@ def button():
     window2_frame4.grid(row=3)
 
     entry_2b =Entry(window2_frame1, width=200, font=('', 50))
-    text = StringVar()
+    #text = StringVar()
     entry_2b.pack()
 
     def insert():
-        table.insert(parent='', index='end', values=(text))
+        impyear=yearset.get()
+        impmonth=monthset.get()
+        impday=dayset.get()
+        date = f"{impyear}年{impmonth}月{impday}日"
+        text = entry_2b.get()
+        table.insert(parent='', index='end', values=(text,date))
 
     yearset=ttk.Combobox(window2_frame2, width=4, height=10, values=[str(i) for i in range(thisyear, thisyear+5)], font=('', 50))
     yearset.pack(side=LEFT)
@@ -72,6 +77,15 @@ def button():
 
     window2.mainloop()
     
+
+# def deletefood():
+#         recordId = table.focus()
+#         delete(recordId)
+def delete_selected():
+    selected_items = table.selection()  # 選択した行のIDを取得
+    for selected_item in selected_items:
+        table.delete(selected_item)  # 選択した行を削除
+
 # Frame設定
 frame1 = Frame(root, width=600, height=800, borderwidth=1, relief='solid', padx=10, pady=10)
 frame2 = Frame(root, width=300, height=400, borderwidth=1, relief='solid', padx=10, pady=10)
@@ -90,17 +104,21 @@ frame3.grid(row=1, column=1)
 # Widget配置
 add = Button(frame2, text='食品追加', font=('', 50),command=button)
 add.pack()
-delete = Button(frame2, text='食品削除', font=('',50),command=button)
+delete = Button(frame2, text='食品削除', font=('',50),command=delete_selected)#後でcommand=buttonをtableDeleteに変更する
 delete.pack()
 label = Label(frame3, text='おすすめ', font=('', 50))
 label.pack()
 
 columns= ('name', 'date')
-table = ttk.Treeview(frame1, columns=columns)
-table.column('name', anchor=W, width=300)
-table.column('date', anchor=E, width=300)
+table = ttk.Treeview(frame1, columns=columns, height=49, show="headings")
+#table.column('0#' width=0, stretch='no')
+table.column('name', anchor=W, width=300, stretch='no')
+table.column('date', anchor=W, width=300, stretch='no')
+#table.heading('0#', text='')
 table.heading('name', text='食品名', anchor=NW)
-table.heading('date', text='期限', anchor=NE)
+table.heading('date', text='期限', anchor=NW)
 table.pack()
+
+
 
 root.mainloop()
