@@ -61,13 +61,13 @@ def button():
     yearsetlabel=Label(window2_frame2, text='年', font=('', 50))
     yearsetlabel.pack(side=LEFT)
 
-    monthset=ttk.Combobox(window2_frame2, width=2, height=12, values=[str(i) for i in range(1,12)], font=('', 50))
+    monthset=ttk.Combobox(window2_frame2, width=2, height=12, values=[str(i) for i in range(1,13)], font=('', 50))
     monthset.pack(side=LEFT)
 
     monthsetlabel=Label(window2_frame2, text='月', font=('', 50))
     monthsetlabel.pack(side=LEFT)
 
-    dayset=ttk.Combobox(window2_frame2, width=2, height=10, values=[str(i) for i in range(1,31)], font=('', 50))
+    dayset=ttk.Combobox(window2_frame2, width=2, height=10, values=[str(i) for i in range(1,32)], font=('', 50))
     dayset.pack(side=LEFT)
 
     daysetlabel=Label(window2_frame2, text='日', font=('', 50))
