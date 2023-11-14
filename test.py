@@ -41,12 +41,19 @@ def button():
     entry_2b.pack()
 
     def insert():
+        global impyear
+        global impmonth
+        global impday
+        global remaindate
         impyear=yearset.get()
         impmonth=monthset.get()
         impday=dayset.get()
+        inputdate=datetime.date(int(impyear), int(impmonth), int(impday))
+        nowdate=datetime.date.today()
+        remaindate =inputdate-nowdate
         date = f"{impyear}年{impmonth}月{impday}日"
         text = entry_2b.get()
-        table.insert(parent='', index='end', values=(text,date))
+        table.insert(parent='', index='end', values=(text,remaindate,date))
 
     yearset=ttk.Combobox(window2_frame2, width=4, height=10, values=[str(i) for i in range(thisyear, thisyear+5)], font=('', 50))
     yearset.pack(side=LEFT)
@@ -74,17 +81,16 @@ def button():
 
     deletewindow2=Button(window2_frame4, text='ウィンドウ削除', font=('', 50), command=deletewindow)
     deletewindow2.pack()
-
     window2.mainloop()
-    
 
-# def deletefood():
-#         recordId = table.focus()
-#         delete(recordId)
 def delete_selected():
     selected_items = table.selection()  # 選択した行のIDを取得
     for selected_item in selected_items:
         table.delete(selected_item)  # 選択した行を削除
+
+
+
+
 
 # Frame設定
 frame1 = Frame(root, width=600, height=800, borderwidth=1, relief='solid', padx=10, pady=10)
@@ -104,21 +110,21 @@ frame3.grid(row=1, column=1)
 # Widget配置
 add = Button(frame2, text='食品追加', font=('', 50),command=button)
 add.pack()
-delete = Button(frame2, text='食品削除', font=('',50),command=delete_selected)#後でcommand=buttonをtableDeleteに変更する
+delete = Button(frame2, text='食品削除', font=('',50),command=delete_selected)
 delete.pack()
+update = Button(frame2, text='更新', font=('', 50), command=button)
+update.pack()
 label = Label(frame3, text='おすすめ', font=('', 50))
 label.pack()
 
-columns= ('name', 'date')
+columns= ('name', 'remain','date')
 table = ttk.Treeview(frame1, columns=columns, height=49, show="headings")
-#table.column('0#' width=0, stretch='no')
-table.column('name', anchor=W, width=300, stretch='no')
-table.column('date', anchor=W, width=300, stretch='no')
-#table.heading('0#', text='')
+table.column('name', anchor=W, width=200, stretch='no')
+table.column('date', anchor=W, width=200, stretch='no')
+table.column('remain',anchor=W, width=200, stretch='no')
 table.heading('name', text='食品名', anchor=NW)
 table.heading('date', text='期限', anchor=NW)
+table.heading('remain',text='残り時間', anchor=NW)
 table.pack()
-
-
 
 root.mainloop()
