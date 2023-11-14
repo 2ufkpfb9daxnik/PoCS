@@ -18,6 +18,7 @@ def button():
     window2=Toplevel(root)
     window2.focus()
     window2.geometry("550x400")
+    window2.title("食品追加")
 
     window2_frame1=Frame(window2, width=550, height=100, relief='solid', padx=10, pady=10)
     window2_frame2=Frame(window2, width=550, height=100, relief='solid', padx=10, pady=10)
