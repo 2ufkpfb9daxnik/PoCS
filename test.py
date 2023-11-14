@@ -1,16 +1,17 @@
 from tkinter import *
-import tkinter.ttk as ttk
+from tkinter import ttk, font
 
 import datetime
 root = Tk()
 
+font50 = font.Font(size=50)
+root.option_add("*Font", font50)
 
 root.title('総合課題実習')
 root.geometry('900x800')
 root.resizable(False, False)
 
 thisyear = datetime.date.today().year
-
 
 
 
@@ -36,10 +37,11 @@ def button():
     window2_frame4.grid(row=3)
 
     entry_2b =Entry(window2_frame1, width=200, font=('', 50))
-    text = StringVar()
+    #text = StringVar()
     entry_2b.pack()
 
     def insert():
+        text = entry_2b.get()
         table.insert(parent='', index='end', values=(text))
 
     yearset=ttk.Combobox(window2_frame2, width=4, height=10, values=[str(i) for i in range(thisyear, thisyear+5)], font=('', 50))
@@ -71,6 +73,10 @@ def button():
 
     window2.mainloop()
     
+
+def deletefood():
+        recordId = table.focus()
+        delete(recordId)
 # Frame設定
 frame1 = Frame(root, width=600, height=800, borderwidth=1, relief='solid', padx=10, pady=10)
 frame2 = Frame(root, width=300, height=400, borderwidth=1, relief='solid', padx=10, pady=10)
@@ -89,17 +95,21 @@ frame3.grid(row=1, column=1)
 # Widget配置
 add = Button(frame2, text='食品追加', font=('', 50),command=button)
 add.pack()
-delete = Button(frame2, text='食品削除', font=('',50),command=button)
+delete = Button(frame2, text='食品削除', font=('',50),command=deletefood)#後でcommand=buttonをtableDeleteに変更する
 delete.pack()
 label = Label(frame3, text='おすすめ', font=('', 50))
 label.pack()
 
 columns= ('name', 'date')
 table = ttk.Treeview(frame1, columns=columns)
-table.column('name', anchor=W, width=300)
-table.column('date', anchor=E, width=300)
+#table.column('0#' width=0, stretch='no')
+table.column('name', anchor=W, width=300, stretch='no')
+table.column('date', anchor=W, width=300, stretch='no')
+#table.heading('0#', text='')
 table.heading('name', text='食品名', anchor=NW)
-table.heading('date', text='期限', anchor=NE)
+table.heading('date', text='期限', anchor=NW)
 table.pack()
+
+
 
 root.mainloop()
