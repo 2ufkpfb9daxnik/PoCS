@@ -1,9 +1,11 @@
 from tkinter import *
-import tkinter.ttk as ttk
-
+# import tkinter.ttk as ttk
+from tkinter import ttk, font
 import datetime
 root = Tk()
 
+font50 = font.Font(size=50)
+root.option_add("*Font", font50)
 
 root.title('総合課題実習')
 root.geometry('900x800')
