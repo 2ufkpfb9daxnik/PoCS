@@ -15,7 +15,7 @@ root.resizable(False, False)
 thisyear = datetime.date.today().year
 
 def sortANDdisplay():
-    with open("test.csv","r",encoding="ms932")as csv_file:
+    with open("../ptest.csv","r",encoding="ms932")as csv_file:
         reader = csv.reader(csv_file, delimiter=",", doublequote=True, lineterminator="\r\n", quotechar='"', skipinitialspace=True)
     table.insert(parent='', index='end', values=(text,remaindate,date))#ソフト上に表示
 
@@ -55,7 +55,7 @@ def button():
         date = f"{impyear}年{impmonth}月{impday}日"
         text = entry_2b.get() 
         data = [text, impyear,impmonth,impday]       #ここからファイル書き込み
-        with open("test.csv", "a", newline="") as csvfile:        # CSVファイルを新規作成してデータを書き込む
+        with open("data/test.csv", "a", newline="") as csvfile:        # CSVファイルを新規作成してデータを書き込む
             writer = csv.writer(csvfile)
             writer.writerow(data)
 
