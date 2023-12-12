@@ -2,6 +2,7 @@ from tkinter import *
 # import tkinter.ttk as ttk
 from tkinter import ttk, font
 import datetime
+import csv
 root = Tk()
 
 font50 = font.Font(size=50)
@@ -13,7 +14,10 @@ root.resizable(False, False)
 
 thisyear = datetime.date.today().year
 
-
+def sortANDdisplay():
+    with open("test.csv","r",encoding="ms932")as csv_file:
+        reader = csv.reader(csv_file, delimiter=",", doublequote=True, lineterminator="\r\n", quotechar='"', skipinitialspace=True)
+    table.insert(parent='', index='end', values=(text,remaindate,date))#ソフト上に表示
 
 def button():
     window2=Toplevel(root)
@@ -41,10 +45,7 @@ def button():
     entry_2b.pack()
 
     def insert():
-        global impyear
-        global impmonth
-        global impday
-        global remaindate
+        global impyear, impmonth, impday, remaindate, text, date
         impyear=yearset.get()
         impmonth=monthset.get()
         impday=dayset.get()
@@ -52,8 +53,11 @@ def button():
         nowdate=datetime.date.today()
         remaindate =inputdate-nowdate
         date = f"{impyear}年{impmonth}月{impday}日"
-        text = entry_2b.get()
-        table.insert(parent='', index='end', values=(text,remaindate,date))
+        text = entry_2b.get() 
+        data = [text, impyear,impmonth,impday]       #ここからファイル書き込み
+        with open("test.csv", "a", newline="") as csvfile:        # CSVファイルを新規作成してデータを書き込む
+            writer = csv.writer(csvfile)
+            writer.writerow(data)
 
     yearset=ttk.Combobox(window2_frame2, width=4, height=10, values=[str(i) for i in range(thisyear, thisyear+5)], font=('', 50))
     yearset.pack(side=LEFT)
@@ -126,5 +130,8 @@ table.heading('name', text='食品名', anchor=NW)
 table.heading('date', text='期限', anchor=NW)
 table.heading('remain',text='残り時間', anchor=NW)
 table.pack()
+
+
+
 
 root.mainloop()
