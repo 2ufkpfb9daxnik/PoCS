@@ -15,9 +15,10 @@ root.resizable(False, False)
 thisyear = datetime.date.today().year
 
 def sortANDdisplay():
-    with open("../ptest.csv","r",encoding="ms932")as csv_file:
+    with open("test.csv","r",encoding="ms932")as csv_file:
         reader = csv.reader(csv_file, delimiter=",", doublequote=True, lineterminator="\r\n", quotechar='"', skipinitialspace=True)
-    table.insert(parent='', index='end', values=(text,remaindate,date))#ソフト上に表示
+    for row in range(1):
+        table.insert(parent='', index='end', values=(row[1],row[2],row[3]))#ソフト上に表示
 
 def button():
     window2=Toplevel(root)
@@ -55,9 +56,10 @@ def button():
         date = f"{impyear}年{impmonth}月{impday}日"
         text = entry_2b.get() 
         data = [text, impyear,impmonth,impday]       #ここからファイル書き込み
-        with open("data/test.csv", "a", newline="") as csvfile:        # CSVファイルを新規作成してデータを書き込む
+        with open("test.csv", "a", newline="") as csvfile:        # CSVファイルを新規作成してデータを書き込む
             writer = csv.writer(csvfile)
             writer.writerow(data)
+        sortANDdisplay()
 
     yearset=ttk.Combobox(window2_frame2, width=4, height=10, values=[str(i) for i in range(thisyear, thisyear+5)], font=('', 50))
     yearset.pack(side=LEFT)
