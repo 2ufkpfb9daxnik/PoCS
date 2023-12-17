@@ -61,7 +61,7 @@ def sortdisplay():
         if remaindate < datetime.timedelta(days=0):
             table.item(item_id, tags=("negative_remaindate"))
 
-
+    
  
 def button():
     window2=Toplevel(root)
@@ -208,8 +208,8 @@ def search_and_open_browser():
 
 search = Button(frame2, text="検索", font=('', 50), command=search_and_open_browser)
 search.pack()
-label = Label(frame3, text='最終更新:', font=('', 50))
-label.pack()
+# label = Label(frame3, text='最終更新:', font=('', 50))
+# label.pack()
 
 sortdisplay()
 
