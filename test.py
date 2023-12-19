@@ -5,8 +5,6 @@ import datetime
 import csv
 import webbrowser
 import urllib.parse
-import shutil
-import os
 root = Tk()
 
 font50 = font.Font(size=50)
@@ -57,12 +55,14 @@ def sortdisplay():
 
         item_id = table.insert(parent='', index='end', values=(values))
 
- # remaindate が負の場合にタグを追加
+# remaindate が負の場合にタグを追加
         if remaindate < datetime.timedelta(days=0):
             table.item(item_id, tags=("negative_remaindate"))
+        if datetime.timedelta(days=0) <remaindate < datetime.timedelta(days=6):
+            table.item(item_id, tags=("underfive_remaindate"))
 
 
- 
+
 def button():
     window2=Toplevel(root)
     window2.focus()
@@ -186,6 +186,7 @@ table.heading('name', text='食品名', anchor=NW)
 table.heading('date', text='期限', anchor=NW)
 table.heading('remain',text='残り時間', anchor=NW)
 table.tag_configure("negative_remaindate", background="red")
+table.tag_configure("underfive_remaindate", background="yellow")
 table.pack()
 
 def search_and_open_browser():
