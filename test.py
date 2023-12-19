@@ -55,7 +55,7 @@ def sortdisplay():
 
         item_id = table.insert(parent='', index='end', values=(values))
 
-# remaindate が負の場合にタグを追加
+# remaindate が負の場合にタグを追加#不等号
         if remaindate < datetime.timedelta(days=0):
             table.item(item_id, tags=("negative_remaindate"))
         if datetime.timedelta(days=0) <remaindate < datetime.timedelta(days=6):
