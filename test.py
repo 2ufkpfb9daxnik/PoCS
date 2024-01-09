@@ -63,7 +63,7 @@ def sortdisplay():
             table.item(item_id, tags=("underfive_remaindate"))
 
 
- 
+
 def button():
     window2=Toplevel(root)
     window2.focus()
