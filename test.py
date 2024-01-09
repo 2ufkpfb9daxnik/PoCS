@@ -1,7 +1,7 @@
 from tkinter import *
 # import tkinter.ttk as ttk
 from tkinter import ttk, font
-import datetime
+from datetime import datetime
 import csv
 import webbrowser
 import urllib.parse
@@ -14,6 +14,7 @@ root.title('総合課題実習')
 root.geometry('900x800')
 root.resizable(False, False)
 
+import datetime
 thisyear = datetime.date.today().year
 
 def fixed_map(option):
@@ -33,7 +34,7 @@ style.map('Treeview', foreground=fixed_map('foreground'), background=fixed_map('
 
 def sortdisplay():
     date_list = []  # ループの外で date_list を初期化する
-
+    
     with open("test.csv", "r", encoding="utf-8") as csv_file:
         global remaindate
         csv_reader = csv.reader(csv_file)
@@ -56,9 +57,9 @@ def sortdisplay():
         item_id = table.insert(parent='', index='end', values=(values))
 
 # remaindate が負の場合にタグを追加
-        if remaindate < datetime.timedelta(days=0):
+        if remaindate < datetime.timedelta(days=1):
             table.item(item_id, tags=("negative_remaindate"))
-        if datetime.timedelta(days=0) <remaindate < datetime.timedelta(days=6):
+        if datetime.timedelta(days=1) <remaindate < datetime.timedelta(days=6):
             table.item(item_id, tags=("underfive_remaindate"))
 
 
@@ -153,6 +154,39 @@ def delete_selected():
                 csv_writer = csv.writer(csv_file)
                 csv_writer.writerows(rows)
 
+# def convert_date_format(date_str):
+#     # '2023-12-22' を 2023, 12, 22 に変換
+    
+#     date_obj = datetime.strptime(date_str, '%Y-%m-%d')
+#     return date_obj.year, date_obj.month, date_obj.day
+
+# def delete_selected():
+#     selected_items = table.selection()  # 選択した行のIDを取得
+#     for selected_item in selected_items:
+#         # 選択したアイテムのvaluesを取得
+#         selected_values = table.item(selected_item, 'values') if table.item(selected_item, 'values') else None
+
+#         # valuesが存在するか確認
+#         if selected_values:
+#             # TreeViewから選択した行を削除
+#             table.delete(selected_item)
+
+#             # CSVファイルからも削除
+#             with open("test.csv", "r", encoding="utf-8") as csv_file:
+#                 rows = list(csv.reader(csv_file))
+
+#             # 選択した行を特定して削除
+#             rows = [row for row in rows if row[2] != convert_date_format(selected_values[2])]
+
+#             # CSVファイルを再書き込み
+#             with open("test.csv", "w", encoding="utf-8", newline='') as csv_file:
+#                 csv_writer = csv.writer(csv_file)
+#                 csv_writer.writerows(rows)
+
+# 2023-12-22 を 2023, 12, 22 に変換する関数の呼び出し例
+# convert_date_format('2023-12-22')
+
+
 
 # Frame設定
 frame1 = Frame(root, width=600, height=800, borderwidth=1, relief='solid', padx=10, pady=10)
@@ -209,8 +243,8 @@ def search_and_open_browser():
 
 search = Button(frame2, text="検索", font=('', 50), command=search_and_open_browser)
 search.pack()
-label = Label(frame3, text='最終更新:', font=('', 50))
-label.pack()
+# label = Label(frame3, text='最終更新:', font=('', 50))
+# label.pack()
 
 sortdisplay()
 
